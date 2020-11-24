@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.5.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.5.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="retrieve" compatibility="9.5.001" expanded="true" height="68" name="Retrieve CompleteTrain (2)" width="90" x="45" y="34">
+        <parameter key="repository_entry" value="//Local Repository/CompleteTrain"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="9.5.001" expanded="true" height="103" name="Replace Missing Values (3)" width="90" x="179" y="34">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="average"/>
+        <list key="columns"/>
+      </operator>
+      <operator activated="true" class="auto_mlp" compatibility="9.5.001" expanded="true" height="82" name="AutoMLP" width="90" x="380" y="34">
+        <parameter key="training_cycles" value="10"/>
+        <parameter key="number_of_generations" value="10"/>
+        <parameter key="number_of_esemble_mlps" value="4"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.5.001" expanded="true" height="68" name="Retrieve CompleteTest" width="90" x="45" y="238">
+        <parameter key="repository_entry" value="//Local Repository/CompleteTest"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="9.5.001" expanded="true" height="103" name="Replace Missing Values" width="90" x="179" y="238">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="average"/>
+        <list key="columns"/>
+      </operator>
+      <operator activated="true" class="select_attributes" compatibility="9.5.001" expanded="true" height="82" name="Select Attributes (2)" width="90" x="313" y="238">
+        <parameter key="attribute_filter_type" value="subset"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value="F1|F8|F9|F10|F11|F12|F13|F19|F20|F35|F40|F42|F45|F51"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.5.001" expanded="true" height="82" name="Apply Model" width="90" x="514" y="187">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="performance" compatibility="9.5.001" expanded="true" height="82" name="Performance" width="90" x="715" y="136">
+        <parameter key="use_example_weights" value="true"/>
+      </operator>
+      <connect from_op="Retrieve CompleteTrain (2)" from_port="output" to_op="Replace Missing Values (3)" to_port="example set input"/>
+      <connect from_op="Replace Missing Values (3)" from_port="example set output" to_op="AutoMLP" to_port="training set"/>
+      <connect from_op="AutoMLP" from_port="model" to_op="Apply Model" to_port="model"/>
+      <connect from_op="Retrieve CompleteTest" from_port="output" to_op="Replace Missing Values" to_port="example set input"/>
+      <connect from_op="Replace Missing Values" from_port="example set output" to_op="Select Attributes (2)" to_port="example set input"/>
+      <connect from_op="Select Attributes (2)" from_port="example set output" to_op="Apply Model" to_port="unlabelled data"/>
+      <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
+      <connect from_op="Performance" from_port="performance" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>
