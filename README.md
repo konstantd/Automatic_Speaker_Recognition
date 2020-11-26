@@ -17,7 +17,9 @@ Dataset at file:
 
 Speaker recognition is the identification of a person based on the characteristics of his voice. There are two categories of speaker recognition: speaker identification and speaker verification. 
 
-<img src="images/dataset/img2.1.png" alt="img2.1" width=70% />
+<p allign = "center">
+    <img src="images/dataset/img2.1.png" alt="img2.1" width=70% />
+</p>
 
 <u>Speaker identification is used to identify the speaker.</u> The model chooses from a collection of a known voice set. There are two types of the application above. The first one is the identification of a closed speaker set. In that case all speakers are known to the system. The second is the identification of an open speaker set that includes previously unknown speakers. Regarding the closed set, a voice from a currently unknown speaker is analyzed by the system and is then compared to the stored speakers. The speaker is classified regarding to the one with the best features.
 
@@ -79,29 +81,41 @@ In this application VAD was implemented using the parameters STE (short time ene
 
 More specifically, regarding the STE parameter, the speech signal consists of voice and silence areas. Furthermore, the energy associated with the vocal area is large compared to the silent area, which will have minimal or negligible energy. Thus, short-term energy can be used for speech, noise and silence.
 
-<img src="images/equations/eq1.png" alt="equation1" width=40% />
+<p allign = "center">
+    <img src="images/equations/eq1.png" alt="equation1" width=40% />
+</p>    
 
 In the expression above E represents energy of the signal x (m). There is little or no effectiveness of this definition for time-varying signals, such as speech. Therefore we divide our signal into small "windows" whose energy is calculated as follows:
 
-<img src="images/equations/eq2.png" alt="equation2" width=30% />
+<p allign = "center">
+    <img src="images/equations/eq2.png" alt="equation2" width=30% />
+</p> 
 
 Where w (n-m) is the time window, n is the sample in which the analysis window is centered, and N is the window length. High energy will be classified as vocal while low energy will be classified as non-vocal.
 
-<img src="images/dataset/img3.4.png" alt="img3.4" width=50% />
+<p allign = "center">
+    <img src="images/dataset/img3.4.png" alt="img3.4" width=50% />
+</p>
 
 Short Term Autocorellation is then defined as:
 
-<img src="images/equations/eq3.png" alt="equation3" width=40% />
+<p allign = "center">
+    <img src="images/equations/eq3.png" alt="equation3" width=40% />
+    </p>
 
 This expression represents the autocorrelation of a speech segment with a specified window length. If the window size decreases the STA effect weakens. The vocal sector would be periodic and the non-vocal sector would be non-periodic in short-term autocorrelation.
 
-<img src="images/dataset/img3.5.png" alt="img3.5" width=50% />
+<p allign = "center">
+    <img src="images/dataset/img3.5.png" alt="img3.5" width=50% />
+</p>
 
 Having settled on the parameters to be used, we followed tests on speech signals. In these tests we defined thresholds, in which each parameter had correct results. These tests also revealed the weakness of the ZCR which had different results depending on the audio signal while at the same time the others produced stable and satisfactory results.
 
 In conclusion, the combination of these 2 parameters with the use of the correct thresholds resulted in the removal of silence from the signals and kept only the parts to which the respective speaker was speaking.
 
-<img src="images/dataset/img3.6.png" alt="img3.6" width=50% />
+<p allign = "center">
+    <img src="images/dataset/img3.6.png" alt="img3.6" width=50% />
+</p>
 
 At this point we will analyze the 2 functions used to load the audio in Matlab and create recordings with features for each audio window. These are the **generate_dataset** and **feature_extraction** functions respectively.
 
@@ -145,7 +159,11 @@ A key point in speech recognition is the features, extracted from the audio sign
 
 * **Zero Crossing Rate:**  The zero-crossing rate is the rate of sign-changes along a signal, i.e., the rate at which the signal changes from positive to zero to negative or from negative to zero to positive, in a given time-window.
 
-<img src="images/features/2.7.png" alt="2.7" width=64% />
+
+
+<p allign = "center">
+    <img src="images/features/2.7.png" alt="2.7" width=64% />
+</p>
 
 * **Roughness:** It is an estimation of the sensory dissonance, or roughness, related to the beating phenomenon whenever pair of sinusoids are closed in frequency (critical band).
 
@@ -155,15 +173,21 @@ A key point in speech recognition is the features, extracted from the audio sign
 
 * **Roll-off:** Corresponding to the previous one, a frequency is returned so that a part of the total energy of the respective time window is below this frequency. The percentage of energy is set by the user. It is a way to estimate the amount of high frequencies in the signal. As the table above indicates, 9 different percentages of energy were used, some targeting lower (close to 30%) and some higher targets (close to 90%), as suggested by Tzanetakis and Cook, 2002. However, in many experiments with machine learning algorithms the weight of the lower percentages of energy was higher than that of the higher ones.
 
-<img src="images/features/img3.9.png" alt="img3.9" width=66% />
+<p allign = "center">
+    <img src="images/features/img3.9.png" alt="img3.9" width=66% />
+</p>
 
 * **Irregularity**:  The irregularity of a spectrum is the degree of variation of the successive peaks of the spectrum. The formula below was used:
 
-<img src="images/equations/eq4.png" alt="equation4" width=20% />
+<p allign = "center">
+    <img src="images/equations/eq4.png" alt="equation4" width=20% />
+</p>
 
 * **Mel Frequency Cepstral Coefficient (MFCC):**  The MFCC feature extraction technique is relatively easy to apply, not complicated at all and gives very good results, which is why it is the most common one. It is based on the spectral content of the voice signal, as it is recognized by human hearing. According to psychoacoustic research the human perception of the frequencies of a voice signal does not follow a linear scale. Thus, for every tone with real frequency f measured in Hz, there is a subjective tone on the mel scale, which will be analyzed below. The following figure shows the steps to extract the MFCCs. 
 
-<img src="images/features/3.10.png" alt="3.10" width=66% />
+<p allign = "center">
+    <img src="images/features/3.10.png" alt="3.10" width=66% />
+</p>
 
 
 
@@ -180,7 +204,9 @@ Fast Fourier Transform is applied to each of these windows and is multiplied by 
 $$
 Mel(f)=2595log(1+\frac{f}{700})
 $$
-<img src="images\features\3.11.png" alt="3.11" width=60% />
+<p allign = "center">
+    <img src="images\features\3.11.png" alt="3.11" width=60% />
+</p>
 
 
 
