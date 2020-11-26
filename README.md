@@ -7,11 +7,7 @@ This project is a scope of research in the relative Academic Course "Sound and I
 
 Automatic Speaker Recognition is the process of identifying a speaker based on specific information contained in sound waves, in order to identify the speaker from controlled access systems. It is used to answer the question "Who speaks when?" 
 
-## Contents
 
-Source code at file:
-
-Dataset at file:
 
 ## Abstract
 
